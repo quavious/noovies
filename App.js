@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
-import { Text, Image } from 'react-native';
+import { Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import {NavigationContainer} from '@react-navigation/native';
+import {Stack} from '@react-navigation/stack';
 
 // images === "array"
 const cacheImages = (images) => images.map(image => {
@@ -24,5 +26,10 @@ export default function App() {
     return await Promise.all([...images, ...fonts]); // startAsync returns promise object
   }
   const onFinish = () => setIsReady(true);
-  return isReady ? <Text>Hello World!</Text> : <AppLoading startAsync={loadAssets} onFinish={onFinish} onError={console.error}/>
+  return isReady ? (
+  <NavigationContainer>
+    <Stack />
+  </NavigationContainer>
+  ) : ( 
+  <AppLoading startAsync={loadAssets} onFinish={onFinish} onError={console.error}/> )
 }
