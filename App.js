@@ -21,7 +21,7 @@ export default function App() {
   const loadAssets = async() => {
     const images = cacheImages([require("./assets/splash.png")]); //require module
     const fonts = cacheFonts([Ionicons.font]);
-    return await Promise.all([...images, ...fonts]);
+    return await Promise.all([...images, ...fonts]); // startAsync returns promise object
   }
   const onFinish = () => setIsReady(true);
   return isReady ? <Text>Hello World!</Text> : <AppLoading startAsync={loadAssets} onFinish={onFinish} onError={console.error}/>
