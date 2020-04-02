@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Button} from 'react-native';
-import { movieApi } from '../Api';
+import { movieApi } from '../../Api';
+import MoviesPresenter from "./MoviesPresenter";
 
 export default () => {
     const [movies, setMovies] = useState({
+        loading: true,
         nowPlaying: [],
         popular: [],
         upcoming: [],
@@ -15,14 +17,12 @@ export default () => {
         const [nowPlaying, nowPlayingError] = await movieApi.nowPlaying();
         const [popular, popularError] = await movieApi.popular();
         const [upcoming, upcomingError] = await movieApi.upComing();
-        setMovies({nowPlaying, popular, upcoming, nowPlayingError, popularError, upcomingError})
+        setMovies({
+            loading: false,
+            nowPlaying, popular, upcoming, nowPlayingError, popularError, upcomingError})
     }
     useEffect(() => {
         getData();
     }, []);
-    return (
-    <View style={{flex:1, backgroundColor: 'black'}}> 
-        <Text style={{color: 'white'}}>{movies.nowPlaying?.length}</Text>
-    </View>
-    )
+    return <MoviesPresenter {...movies} />
 }
