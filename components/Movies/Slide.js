@@ -4,6 +4,7 @@ import PropTypes, { string } from 'prop-types';
 import { apiImage } from '../../Api';
 import Poster from '../Poster';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Votes from '../Votes';
 
 const BG = styled.Image`
     height: 100%;
@@ -31,11 +32,8 @@ const Title = styled.Text`
     font-size: 16px;
     margin-bottom: 5px;
 `
-const Votes = styled.Text`
-    color: rgb(220,220,220);
-    opacity: 0.7;
-    margin-bottom: 10px;
-    font-size: 12px;
+const VotesContainer = styled.Text`
+    margin-bottom: 12px;
 `
 const Overview = styled.Text`
     color: white;
@@ -60,9 +58,11 @@ const Slide = ({id, title, backgroundImage, votes, overview, poster}) => {
             <Content>
                 <Poster url={apiImage(poster)} />
                 <Data>
-                    <Title>{title.slice(0,30)}</Title>
-                    <Votes>{votes} / 10</Votes>
-                    <Overview>{overview.slice(0,120)}</Overview>
+                    <Title>{title.length > 30 ? `${title.slice(0,30)}...` : title}</Title>
+                    <VotesContainer>
+                        <Votes votes={votes} />
+                    </VotesContainer>
+                    <Overview>{overview.length > 110 ? `${overview.slice(0,110)}...` : overview}</Overview>
                     <TouchableOpacity>
                         <Button>
                             <ButtonText>View Details</ButtonText>
