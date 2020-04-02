@@ -13,7 +13,7 @@ const Container = styled.View`
 `
 const SliderContainer = styled.View`
     width: ${WIDTH}px;
-    height : ${HEIGHT/4}px;
+    height : ${HEIGHT/3}px;
 `
 
 export default ({ loading, nowPlaying }) => {
@@ -30,7 +30,8 @@ export default ({ loading, nowPlaying }) => {
                             title={movie.original_title}
                             overview={movie.overview}
                             votes={movie.vote_average}
-                            backgroundImage={movie.backdrop_path} />
+                            backgroundImage={movie.backdrop_path}
+                            poster = {movie.poster_path} />
                     ))}
                 </Swiper>
             </SliderContainer>
