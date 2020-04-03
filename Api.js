@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const TMDB_KEY = "ad6bfb5080f21a8ceb222d58fe506815";
+const TMDB_KEY = "";
 
 const makeRequest = (path, params) => axios.get(`https://api.themoviedb.org/3/${path}`, {
     params : { 
