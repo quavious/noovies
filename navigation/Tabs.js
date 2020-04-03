@@ -40,8 +40,8 @@ export default ({navigation, route }) => {
                 return <Ionicons name={iconName} color={focused ? 'white' : 'gray'} size={30} />;
             }
         })}>
-            <Tabs.Screen name="Movies" component={Movies}/>
             <Tabs.Screen name="TV" component={TV}/>
+            <Tabs.Screen name="Movies" component={Movies}/>
             <Tabs.Screen name="Search" component={Search}/>
             <Tabs.Screen name="Discovery" component={Favs}/>
         </Tabs.Navigator>

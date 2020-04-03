@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Title from '../../components/Title';
 import Vertical from '../../components/Vertical';
 import Horizontal from '../../components/Horizontal';
+import ScrollContainer from '../../components/ScrollContainer';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get("window")
 
@@ -19,10 +20,13 @@ const SliderContainer = styled.View`
 const Container = styled.View`
 `
 
+const UpcomingContainer = styled.View`
+    margin-top: 20px;
+`
+
 export default ({ loading, nowPlaying, popular, upcoming }) => {
     return (
-        <ScrollView style={{backgroundColor: "black"}} contentContainerStyle={{justifyContent: loading ? "center" : "flex-start"}}>
-            {loading ? <ActivityIndicator color="white" size="small"/> : (
+        <ScrollContainer loading={loading}>
             <>
                 <SliderContainer>
                     <Swiper controlsEnabled={false} loop timeout={5}>
@@ -50,18 +54,19 @@ export default ({ loading, nowPlaying, popular, upcoming }) => {
                         />)}
                     </ScrollView>
                     <Title title={"Coming Soon"} />
-                    {upcoming.map(movie=> (
-                        <Horizontal 
-                            key={movie.id} 
-                            id={movie.id} 
-                            title={movie.title} 
-                            votes={movie.vote_average}
-                            overview={movie.overview}
-                            poster={movie.poster_path}/>
-                    ))}
+                    <UpcomingContainer>
+                        {upcoming.map(movie=> (
+                            <Horizontal 
+                                key={movie.id} 
+                                id={movie.id} 
+                                title={movie.title}
+                                releaseDate={movie.release_date}
+                                overview={movie.overview}
+                                poster={movie.poster_path}/>
+                        ))}
+                    </UpcomingContainer>
                 </Container>
             </>
-            )}
-        </ScrollView>    
+        </ScrollContainer>
     )
 }

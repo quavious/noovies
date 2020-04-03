@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native'
 import PropTypes from 'prop-types';
-import { apiImage } from '../Api';
+import {trimText} from '../utils';
 import Votes from './Votes';
 import Poster from './Poster';
 import { TouchableOpacity } from 'react-native';
@@ -20,8 +20,8 @@ const Title = styled.Text`
 const Vertical = ({id, poster, title, votes}) => (
     <TouchableOpacity>
         <Container>
-            <Poster url={apiImage(poster)}/>
-            <Title>{title.length > 15 ? `${title.slice(0,15)}...` : title}</Title>
+            <Poster url={poster}/>
+            <Title>{trimText(title, 10)}</Title>
             <Votes votes={votes} />
         </Container>
     </TouchableOpacity>
