@@ -3,11 +3,12 @@ import styled from 'styled-components/native';
 import Swiper from 'react-native-web-swiper';
 import { Dimensions, ActivityIndicator } from 'react-native';
 import Slide from '../../components/Movies/Slide';
-import { ScrollView } from 'react-native-gesture-handler';
 import Title from '../../components/Title';
 import Vertical from '../../components/Vertical';
 import Horizontal from '../../components/Horizontal';
 import ScrollContainer from '../../components/ScrollContainer';
+import HorizontalSlider from '../../components/HorizontalSlider';
+import List from '../../components/List'
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get("window")
 
@@ -20,9 +21,6 @@ const SliderContainer = styled.View`
 const Container = styled.View`
 `
 
-const UpcomingContainer = styled.View`
-    margin-top: 20px;
-`
 
 export default ({ loading, nowPlaying, popular, upcoming }) => {
     return (
@@ -43,8 +41,7 @@ export default ({ loading, nowPlaying, popular, upcoming }) => {
                     </Swiper>
                 </SliderContainer>
                 <Container>
-                    <Title title={"Popular Movies"} />
-                    <ScrollView horizontal style={{marginTop: 20, marginBottom: 40}} contentContainerStyle={{paddingLeft: 30}} showsHorizontalScrollIndicator={false}>
+                    <HorizontalSlider title={"Popular Movies"}>
                         {popular.map(movie => <Vertical 
                             id={movie.id}
                             key={movie.id} 
@@ -52,9 +49,8 @@ export default ({ loading, nowPlaying, popular, upcoming }) => {
                             title={movie.title}
                             votes={movie.vote_average}
                         />)}
-                    </ScrollView>
-                    <Title title={"Coming Soon"} />
-                    <UpcomingContainer>
+                    </HorizontalSlider>
+                    <List title="Coming Soon">
                         {upcoming.map(movie=> (
                             <Horizontal 
                                 key={movie.id} 
@@ -64,7 +60,7 @@ export default ({ loading, nowPlaying, popular, upcoming }) => {
                                 overview={movie.overview}
                                 poster={movie.poster_path}/>
                         ))}
-                    </UpcomingContainer>
+                    </List>
                 </Container>
             </>
         </ScrollContainer>

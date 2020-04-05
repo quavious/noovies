@@ -17,11 +17,11 @@ export default () => {
     })
     const getData = async() => {
         const [today, todayError] = await tvApi.today();
-        const [thisWeek, thisWeekError] = await tvApi.today();
-        const [topRated, topRatedError] = await tvApi.today();
-        const [popular, popularError] = await tvApi.today();
+        const [topRated, topRatedError] = await tvApi.topRated();
+        const [popular, popularError] = await tvApi.popular();
+        const [thisWeek, thisWeekError] = await tvApi.thisWeek();
         setShows({
-            loading: false, today, thisWeek, topRated, popular, todayError, thisWeekError, topRatedError, popularError
+            loading: false, today, topRated, thisWeek, popular, todayError, thisWeekError, topRatedError, popularError
         })
     }
     useEffect(() => {
