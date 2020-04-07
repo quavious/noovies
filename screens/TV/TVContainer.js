@@ -28,6 +28,6 @@ export default () => {
         getData()
     }, [])
     return (
-        <TVPresenter {...shows} />
+        <TVPresenter refreshFn={getData} {...shows} />
     )
 }

@@ -3,13 +3,14 @@ import styled from 'styled-components/native';
 import Input from '../../components/Input';
 import Vertical from '../../components/Vertical';
 import HorizontalSlider from '../../components/HorizontalSlider';
+import ScrollContainer from '../../components/ScrollContainer';
 
 const Container = styled.ScrollView`
     background-color: black;
 `;
 
 export default ({movies, shows, onChange, onSubmit, keyword}) => ( 
-    <Container contentContainerStyle={{}}>
+    <ScrollContainer refreshFn={onSubmit} loading={false} refreshFn={onSubmit} contentContainerStyle={{paddingTop: 10}}>
         <Input placeholder={"Search a Keyword"} value={keyword} onChange={onChange} onSubmit={onSubmit}/>
         {movies.length !== 0 && (
         <HorizontalSlider title="Movie Results">
@@ -35,7 +36,7 @@ export default ({movies, shows, onChange, onSubmit, keyword}) => (
             )}
         </HorizontalSlider>
         )}
-    </Container>
+    </ScrollContainer>
 )
 
 //React elements is true;
