@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
-import { PanResponder, Dimensions } from 'react-native';
+import { PanResponder, Dimensions, Text } from 'react-native';
 import {apiImage} from '../../Api';
 import {Animated} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 const {width:WIDTH, height:HEIGHT} = Dimensions.get("window");
 
@@ -23,7 +24,7 @@ const styles = {
     height: HEIGHT / 1.5,
     width: "90%",
     position: "absolute",
-    top: 50
+    top: 30
 }
 const Poster = styled.Image`
     width: 100%;
@@ -32,8 +33,12 @@ const Poster = styled.Image`
     border-radius: 20px;
 `;
 
-export default ({results}) => {
+export default ({refreshFn, results}) => {
     const [topIndex, setTopIndex] = useState(0)
+    const onRefresh = async() => {
+        await refreshFn();
+        setTopIndex(0)
+    }
     const nextCard = () => setTopIndex(topIndex + 1) // setTopIndex(currentValue => currentValue + 1) can also be used
     const position = new Animated.ValueXY();
 
@@ -112,6 +117,7 @@ export default ({results}) => {
                     );
                 }
             })}
+            <TouchableOpacity style={{zIndex:"100"}} onPress={onRefresh}><Text style={{color: "white", }}>REFRESH</Text></TouchableOpacity>
         </Container>
     )
 }

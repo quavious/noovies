@@ -15,5 +15,5 @@ export default () => {
     useEffect(() => {
         getData()
     },[])
-    return <FavsPresenter {...movies} />
+    return <FavsPresenter refreshFn={getData} {...movies} />
 }
