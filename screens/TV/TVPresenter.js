@@ -14,14 +14,14 @@ export default ({refreshFn, loading, topRated, popular, today}) => (
     <ScrollContainer refreshFn={refreshFn} loading={loading}>
         <Container>
             <HorizontalSlider title={"Popular Shows"}>
-                {popular.map(show => <Vertical id={show.id} key={show.id} poster={show.poster_path} title={show.name} votes={show.vote_average}/>)}
+                {popular.map(show => <Vertical isTV={true} id={show.id} key={show.id} poster={show.poster_path} title={show.name} votes={show.vote_average}/>)}
             </HorizontalSlider>
             <HorizontalSlider title={"Top Rated"}>
-                {topRated.map(show => <Vertical id={show.id} key={show.id} poster={show.poster_path} title={show.name} votes={show.vote_average}/>)}
+                {topRated.map(show => <Vertical isTV={true} id={show.id} key={show.id} poster={show.poster_path} title={show.name} votes={show.vote_average}/>)}
             </HorizontalSlider>
             <List title="Airing Today">
                 {today.map(show => (
-                    <Horizontal key={show.id} id={show.id} title={show.name} poster={show.poster_path} overview={show.overview} />
+                    <Horizontal isTV={true} key={show.id} id={show.id} title={show.name} poster={show.poster_path} overview={show.overview} />
                 ))}
             </List>
         </Container>

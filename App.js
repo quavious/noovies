@@ -3,7 +3,7 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
 import { Image, StatusBar } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {NavigationContainer} from '@react-navigation/native';
 import Stack from './navigation/Stack';
 
@@ -23,7 +23,7 @@ const App =() => {
   const [isReady, setIsReady] = useState(false);
   const loadAssets = async () => {
     const images = cacheImages(["https://images.unsplash.com/photo-1571847140471-1d7766e825ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",require("./assets/splash.png")]); //require module
-    const fonts = cacheFonts([Ionicons.font]);
+    const fonts = cacheFonts([Ionicons.font, FontAwesome.font]);
     return await Promise.all([...images, ...fonts]); // startAsync returns promise object
   };
 
