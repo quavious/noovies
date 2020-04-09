@@ -34,6 +34,7 @@ const Poster = styled.Image`
 
 export default ({results}) => {
     const [topIndex, setTopIndex] = useState(0)
+    const nextCard = () => setTopIndex(topIndex + 1) // setTopIndex(currentValue => currentValue + 1) can also be used
     const position = new Animated.ValueXY();
 
     const panResponder = PanResponder.create({
@@ -41,23 +42,54 @@ export default ({results}) => {
         onPanResponderMove: (evt, {dx,dy}) => {
             position.setValue({x:dx,y:dy})
         },
-        onPanResponderRelease: () => {
-            Animated.spring(position, {
-                toValue: {
-                    x: 0,
-                    y: 0
-                }
-            }).start()
+        onPanResponderRelease: (evt, {dx, dy}) => {
+            if(dx >= 200){
+                Animated.spring(position, {
+                    toValue: {
+                        x:WIDTH+100,
+                        y: dy
+                    }
+                }).start(nextCard)
+            }
+            else if(dx <= -200) {
+                Animated.spring(position, {
+                    toValue: {
+                        x:-WIDTH-100,
+                        y: dy
+                    }
+                }).start(nextCard);
+            } else {
+                Animated.spring(position, {
+                    toValue: {
+                        x: 0,
+                        y: 0
+                    }
+                }).start()
+            }
         }
     });
     const rotationValues = position.x.interpolate({
         inputRange: [-100, 0, 100],
         outputRange: ['-10deg', '0deg', '10deg'], // propotion
         extrapolate: "clamp" // set deadline(limit) in range
+        // x에 대해 -10deg에서 10deg까지 rotate한다
+    })
+    const secondCardOpacity = position.x.interpolate({
+        inputRange: [-255, 0 ,255],
+        outputRange: [1, 0.3, 1],
+        extrapolate: "clamp"
+    })
+    const secondCardScale = position.x.interpolate({
+        inputRange: [-255, 0, 255],
+        outputRange: [1, 0.9, 1],
+        extrapolate: "clamp"
     })
     return (
         <Container>
             {results.map((result, index) => {
+                if(index < topIndex) {
+                    return null;
+                }
                 if(index === topIndex) {
                     return (
                         <Animated.View style={{...styles, zIndex: 1, transform: [{rotate: rotationValues}, ...position.getTranslateTransform()]}} key={result.id} {...panResponder.panHandlers}>
@@ -65,9 +97,16 @@ export default ({results}) => {
                         </Animated.View>
                     );
                 }
+                else if(index === topIndex + 1) {
+                    return (
+                        <Animated.View style={{...styles, zIndex: -index, opacity: secondCardOpacity, transform:[{scale: secondCardScale}]}} key={result.id} {...panResponder.panHandlers}>
+                            <Poster source={{uri: apiImage(result.poster_path)}} />
+                        </Animated.View>
+                    );
+                }
                 else {
                     return (
-                        <Animated.View style={{...styles, zIndex: -index}} key={result.id} {...panResponder.panHandlers}>
+                        <Animated.View style={{...styles, zIndex: -index,  opacity: 0}} key={result.id} {...panResponder.panHandlers}>
                             <Poster source={{uri: apiImage(result.poster_path)}} />
                         </Animated.View>
                     );
