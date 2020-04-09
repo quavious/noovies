@@ -46,23 +46,28 @@ export default ({results}) => {
                 toValue: {
                     x: 0,
                     y: 0
-                },friction: 10
+                }
             }).start()
         }
+    });
+    const rotationValues = position.x.interpolate({
+        inputRange: [-100, 0, 100],
+        outputRange: ['-10deg', '0deg', '10deg'], // propotion
+        extrapolate: "clamp" // set deadline(limit) in range
     })
     return (
         <Container>
-            {results.reverse().map((result, index) => {
+            {results.map((result, index) => {
                 if(index === topIndex) {
                     return (
-                        <Animated.View style={{...styles, zIndex: 1, transform: [...position.getTranslateTransform()]}} key={result.id} {...panResponder.panHandlers}>
+                        <Animated.View style={{...styles, zIndex: 1, transform: [{rotate: rotationValues}, ...position.getTranslateTransform()]}} key={result.id} {...panResponder.panHandlers}>
                             <Poster source={{uri: apiImage(result.poster_path)}} />
                         </Animated.View>
                     );
                 }
                 else {
                     return (
-                        <Animated.View style={{...styles}} key={result.id} {...panResponder.panHandlers}>
+                        <Animated.View style={{...styles, zIndex: -index}} key={result.id} {...panResponder.panHandlers}>
                             <Poster source={{uri: apiImage(result.poster_path)}} />
                         </Animated.View>
                     );
